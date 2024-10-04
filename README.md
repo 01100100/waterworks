@@ -71,10 +71,10 @@ There are two jobs in the workflow:
 
 ## Fly.io Deployment 🛠
 
-To start a dbt shell session on a fly machine with enough memory, run:
+To start a shell session on a fly machine using the dbt environment and enough memory, run:
 
 ```bash
-fly machine run . -a waterworks --shell -c fly.toml --vm-memory 8192 --vm-cpu-kind performance --vm-cpus 2
+fly machine run . -a waterworks --shell -c fly.toml --vm-memory 8192 --vm-cpu-kind performance
 ```
 
 This will use the `fly.toml` configuration file to set up the machine based on the Dockerfile. The `--vm-memory` and `--vm-cpu-kind` flags set the memory and CPU requirements and can be adjusted based on how much data is being processed.
@@ -82,7 +82,7 @@ This will use the `fly.toml` configuration file to set up the machine based on t
 To schedule a dbt run on a fly machine, run:
 
 ```bash
-fly machine run . -a waterworks --shell -c fly.toml --vm-memory 8192 --vm-cpu-kind performance --vm-cpus 2
+fly machine run . -a waterworks -c fly.toml --vm-memory 8192 --vm-cpu-kind performance --region ams
 ```
 
 NOTE:

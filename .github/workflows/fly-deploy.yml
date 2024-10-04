@@ -1,0 +1,21 @@
+# See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
+
+name: Fly Update Scheduled Machine Run
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    name: Update Scheduled Machine Run
+    runs-on: ubuntu-latest
+    concurrency: deploy-group    # optional: ensure only one action runs at a time
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+      - name: Deploy to Fly
+        run: flyctl machine run . -a waterworks -c fly.toml --vm-memory 8192 --vm-cpu-kind performance --region ams
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
