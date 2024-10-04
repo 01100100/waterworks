@@ -1,0 +1,47 @@
+name: 'factory'
+version: '1.0.0'
+profile: 'factory'
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  factory:
+    +materialized: external
+    staging:
+      +materialized: incremental
+    stats:
+      +materialized: external
+      +format: json
+    owner:
+      +materialized: external
+      +format: json
+    country:
+      +materialized: external
+      +format: json
+    borders:
+      +enabled: false
+      +materialized: table
+      post-hook: "CREATE INDEX rtree_index ON {{ this }} USING rtree(geom)"
+    nominatim_relations:
+      +materialized: incremental
+    relations:
+      +materialized: incremental
+    synthetic_relations:
+      +materialized: incremental
+    relations_geojson:
+      +materialized: external
+      +format: GDAL
+      +location: 's3://hydro-xpid/modelled/relations_geojson.json'
+      +options: 
+        DRIVER: GeoJSON
+        OVERWRITE: YES
+      pre-hook: "DROP VIEW IF EXISTS {{ this }}"
+on-run-start:
+  - "{{ register_upstream_external_models() }}"
