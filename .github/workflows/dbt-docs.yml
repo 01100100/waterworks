@@ -56,6 +56,10 @@ jobs:
             echo "Error: Hard links found in the docs directory."
             exit 1
           fi
+      
+      - name: set permissions
+        run: |
+          chmod -R 755 ${{ github.workspace }}/docs
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
