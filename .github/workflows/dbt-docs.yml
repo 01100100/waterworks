@@ -46,29 +46,11 @@ jobs:
           cp *.json *.html graph.gpickle ${{ github.workspace }}/docs
           ls -ltra ${{ github.workspace }}/docs
 
-      - name: Check for symlinks and hard links
-        run: |
-          if find ${{ github.workspace }}/docs -type l | read; then
-            echo "Error: Symlinks found in the docs directory."
-            exit 1
-          fi
-          if find ${{ github.workspace }}/docs -type f -links +1 | read; then
-            echo "Error: Hard links found in the docs directory."
-            exit 1
-          fi
-      
-      - name: set permissions
-        run: |
-          chmod -R 755 ${{ github.workspace }}/docs
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+      - name: "Upload pages to artifact"
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ${{ github.workspace }}/docs
-          name: github-pages
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: github-pages
