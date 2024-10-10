@@ -51,17 +51,6 @@ jobs:
         with:
           path: ${{ github.workspace }}/docs
 
-      - name: "Zip artifact"
-        run: zip -jrq docs.zip ${{ github.workspace }}/docs
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          path: docs.zip
-          name: github-pages
-
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: github-pages
