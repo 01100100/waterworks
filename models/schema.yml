@@ -155,6 +155,8 @@ models:
 
 seeds:
 - name: country_codes
+  docs: 
+    node_color: HotPink
   description: >
     Raw CSV from [github](https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/all/all.csv)
 
@@ -163,7 +165,7 @@ sources:
     description: >
       These sources are external to the project and are fetched from the world wide web 🖥️
     tables:
-      - name: raw_borders
+      - name: raw_country_borders
         description: >
           Raw GEOJSON data of whole world country borders distributed by [datahub.io](https://datahub.io/core/geo-countries). The data is fetched from [https://r2.datahub.io/clvyjaryy0000la0cxieg4o8o/master/raw/data/countries.geojson](https://datahub.io/core/geo-countries) with [licensing](https://opendatacommons.org/licenses/pddl/).
         config:
